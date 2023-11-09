@@ -30,20 +30,23 @@ buttons.forEach(button => {
     const buttonText = this.textContent;
 
     if (!isNaN(buttonText)) {
-        if (operation === null) {
-          if (!(firstNumber === '0' && buttonText === '0')) {
-            firstNumber += buttonText;
-          }
-          display.textContent = firstNumber;
-        } else {
-          if (!(secondNumber === '0' && buttonText === '0')) {
-            secondNumber += buttonText;
-          }
-          display.textContent = firstNumber + ' ' + operation + ' ' + secondNumber;
+      if (operation === null) {
+        if (!(firstNumber === '0' && buttonText === '0')) {
+          firstNumber += buttonText;
         }
-      } else if (buttonText === '+' || buttonText === '-' || buttonText === '*' || buttonText === '/') {
+        display.textContent = firstNumber;
+        display.textContent = display.textContent.slice(0, 14);
+      } else {
+        if (!(secondNumber === '0' && buttonText === '0')) {
+          secondNumber += buttonText;
+        }
+        display.textContent = firstNumber + ' ' + operation + ' ' + secondNumber;
+        display.textContent = display.textContent.slice(0, 14);
+      }
+    } else if (buttonText === '+' || buttonText === '-' || buttonText === '*' || buttonText === '/') {
       operation = buttonText;
       display.textContent = firstNumber + ' ' + operation;
+      display.textContent = display.textContent.slice(0, 14);
     } else if (buttonText === '=') {
       if (firstNumber === '' || (secondNumber === '' && operation !== null)) {
         display.textContent = 'Error: Invalid operation';
@@ -62,6 +65,7 @@ buttons.forEach(button => {
           result = divide(Number(firstNumber), Number(secondNumber));
         }
         display.textContent = `${firstNumber} ${operation} ${secondNumber} = ${result}`;
+        display.textContent = display.textContent.slice(0, 14);
         firstNumber = '';
         secondNumber = '';
         operation = null;
@@ -71,10 +75,12 @@ buttons.forEach(button => {
       secondNumber = '';
       operation = null;
       display.textContent = '0';
+      display.textContent = display.textContent.slice(0, 14);
     } else if (buttonText === '√') {
       let number = operation === null ? firstNumber : secondNumber;
       let result = Math.sqrt(Number(number));
       display.textContent = result;
+      display.textContent = display.textContent.slice(0, 14);
       if (operation === null) {
         firstNumber = String(result);
       } else {
@@ -84,22 +90,24 @@ buttons.forEach(button => {
       let number = operation === null ? firstNumber : secondNumber;
       let result = Number(number) / 100;
       display.textContent = result;
+      display.textContent = display.textContent.slice(0, 14);
       if (operation === null) {
         firstNumber = String(result);
       } else {
         secondNumber = String(result);
       }
     } else if (buttonText === '.') {
-        if (operation === null) {
-          if (!firstNumber.includes('.')) {
-            firstNumber += buttonText;
-          }
-        } else {
-          if (!secondNumber.includes('.')) {
-            secondNumber += buttonText;
-          }
+      if (operation === null) {
+        if (!firstNumber.includes('.')) {
+          firstNumber += buttonText;
         }
-        display.textContent = firstNumber + (operation ? ' ' + operation + ' ' + secondNumber : '');
+      } else {
+        if (!secondNumber.includes('.')) {
+          secondNumber += buttonText;
+        }
       }
+      display.textContent = firstNumber + (operation ? ' ' + operation + ' ' + secondNumber : '');
+      display.textContent = display.textContent.slice(0, 14);
+    }
   });
 });
