@@ -14,22 +14,22 @@ function subtract(a, b) {
 }
 
 function multiply(a, b) {
-    if (a === 0 || b === 0) {
-      return 0;
-    } else {
-      return a * b;
-    }
+  if (a === 0 || b === 0) {
+    return 0;
+  } else {
+    return a * b;
   }
+}
 
-  function divide(a, b) {
-    if (a === 0) {
-      return 0;
-    } else if (b === 0) {
-      return 'Error: Division by zero';
-    } else {
-      return a / b;
-    }
+function divide(a, b) {
+  if (a === 0) {
+    return 0;
+  } else if (b === 0) {
+    return 'Error: Division by zero';
+  } else {
+    return a / b;
   }
+}
 
 buttons.forEach(button => {
   button.addEventListener('click', function() {
@@ -50,9 +50,11 @@ buttons.forEach(button => {
         display.textContent = display.textContent.slice(0, 14);
       }
     } else if (buttonText === '+' || buttonText === '-' || buttonText === '*' || buttonText === '/') {
-      operation = buttonText;
-      display.textContent = firstNumber + ' ' + operation;
-      display.textContent = display.textContent.slice(0, 14);
+      if (firstNumber !== '') {
+        operation = buttonText;
+        display.textContent = firstNumber + ' ' + operation;
+        display.textContent = display.textContent.slice(0, 14);
+      }
     } else if (buttonText === '=') {
       if (firstNumber === '' || (secondNumber === '' && operation !== null)) {
         display.textContent = 'Error: Invalid operation';
@@ -72,7 +74,7 @@ buttons.forEach(button => {
         }
         display.textContent = `${firstNumber} ${operation} ${secondNumber} = ${result}`;
         display.textContent = display.textContent.slice(0, 14);
-        firstNumber = '';
+        firstNumber = String(result);
         secondNumber = '';
         operation = null;
       }
